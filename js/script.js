@@ -85,7 +85,7 @@ function loadImage(src) {
 function loadHome() {
     currentImages = [];
     currentIndex = 0;
-    loadImage("images/homepage.jpeg");
+    loadImage("images/homepage.jpg");
     prevBtn.style.display = "none";
     nextBtn.style.display = "none";
 }
@@ -102,23 +102,23 @@ function loadStudentUnit(unitNumber) {
 
     let pageNumbers = [];
     switch(unitNumber) {
-        case "1": pageNumbers = [6,7,8,9,10,11]; break;
-        case "2": pageNumbers = [12,13,14,15,16,17]; break;
-        case "3": pageNumbers = [18,19,20,21,22,23,24,25]; break;
-        case "4": pageNumbers = [26,27,28,29,30,31]; break;
-        case "5": pageNumbers = [32,33,34,35,36,37]; break;
-        case "6": pageNumbers = [38,39,40,41,42,43,44,45]; break;
-        case "7": pageNumbers = [46,47,48,49,50,51]; break;
-        case "8": pageNumbers = [52,53,54,55,56,57]; break;
-        case "9": pageNumbers = [58,59,60,61,62,63,64,65]; break;
-        case "10": pageNumbers = [66,67,68,69,70,71]; break;
-        case "11": pageNumbers = [72,73,74,75,76,77]; break;
-        case "12": pageNumbers = [78,79,80,81,82,83,84,85]; break;
+        case "1": pageNumbers = [7,8,9,10,11,12,13,14]; break;
+        case "2": pageNumbers = [15,16,17,18,19,20,21,22]; break;
+        case "3": pageNumbers = [23,24,25,25,26,27,28,29,30]; break;
+        case "4": pageNumbers = [31,32,33,34,35,36,37,38,39,40]; break;
+        case "5": pageNumbers = [41,42,43,44,45,46,47,48,49,50]; break;
+        case "6": pageNumbers = [51,52,53,54,55,56,57,58,59,60]; break;
+        case "7": pageNumbers = [61,62,63,64,65,66,67,68,69,70]; break;
+        case "8": pageNumbers = [71,72,73,74,75,76,77,78,79,80]; break;
+        case "9": pageNumbers = [81,82,83,84,85,86,87,88,89,90]; break;
+        case "10": pageNumbers = [91,92,93,94,95,96,97,98,99,100]; break;
+        case "11": pageNumbers = [101,102,103,104,105,106,107,108,109,110]; break;
+        case "12": pageNumbers = [111,112,113,114,115,116,117,118,119,120]; break;
         default: pageNumbers = []; break;
     }
 
     pageNumbers.forEach(num => {
-        currentImages.push(basePath + "page" + num + ".JPG");
+        currentImages.push(basePath + "page" + num + ".jpg");
     });
 
     loadImage(currentImages[currentIndex]);
@@ -138,23 +138,23 @@ function loadActivityUnit(unitNumber) {
 
     let pageNumbers = [];
     switch(unitNumber) {
-        case "1": pageNumbers = [106,107]; break;
-        case "2": pageNumbers = [108,109]; break;
-        case "3": pageNumbers = [110,111]; break;
-        case "4": pageNumbers = [112,113]; break;
-        case "5": pageNumbers = [114,115]; break;
-        case "6": pageNumbers = [116,117]; break;
-        case "7": pageNumbers = [118,119]; break;
-        case "8": pageNumbers = [120,121]; break;
-        case "9": pageNumbers = [122,123]; break;
-        case "10": pageNumbers = [124,125]; break;
-        case "11": pageNumbers = [126,127]; break;
-        case "12": pageNumbers = [128,129]; break;
+        case "1": pageNumbers = [7,8,9,10,11,12]; break;
+        case "2": pageNumbers = [13,14,15,16,17,18]; break;
+        case "3": pageNumbers = [19,20,21,22,23,24]; break;
+        case "4": pageNumbers = [25,26,27,28,29,30]; break;
+        case "5": pageNumbers = [31,32,33,34,35,36]; break;
+        case "6": pageNumbers = [39,40,41,42,43,44]; break;
+        case "7": pageNumbers = [45,46,47,48,49,50]; break;
+        case "8": pageNumbers = [51,52,53,54,55,56]; break;
+        case "9": pageNumbers = [57,58,59,60,61,62]; break;
+        case "10": pageNumbers = [63,64,65,66,67,68]; break;
+        case "11": pageNumbers = [71,72,73,74,75,76]; break;
+        case "12": pageNumbers = [77,78,79,80,81,82]; break;
         default: pageNumbers = []; break;
     }
 
     pageNumbers.forEach(num => {
-        currentImages.push(basePath + "page" + num + ".JPG");
+        currentImages.push(basePath + "page" + num + ".jpg");
     });
 
     if (currentImages.length > 1) {
@@ -167,10 +167,6 @@ function loadActivityUnit(unitNumber) {
 
     loadImage(currentImages[currentIndex]);
 }
-
-
-
-
 
 
 // ==========================
@@ -234,32 +230,149 @@ nextBtn.addEventListener("click", () => {
 });
 
 // ==========================
-// CTRL + WHEEL ZOOM
+// ZOOM SYSTEM
 // ==========================
-slideContainer.addEventListener("wheel", function(e) {
-    if (!e.ctrlKey) return;
-    e.preventDefault();
 
-    if (e.deltaY < 0) currentScale += 0.1;
-    else currentScale -= 0.1;
-    if (currentScale < 0.1) currentScale = 0.1;
+// Minimum and maximum zoom
+const MIN_ZOOM = 0.1;
+const MAX_ZOOM = 5;
 
-    slideImage.style.width = slideImage.naturalWidth * currentScale + "px";
-    slideImage.style.height = slideImage.naturalHeight * currentScale + "px";
+// Apply zoom ONLY to the slide image
+function applyZoom() {
+
+    if (!slideImage.naturalWidth || !slideImage.naturalHeight) {
+        return;
+    }
+
+    slideImage.style.width =
+        (slideImage.naturalWidth * currentScale) + "px";
+
+    slideImage.style.height =
+        (slideImage.naturalHeight * currentScale) + "px";
 
     resizeEditCanvas();
-    
-    function resizeEditCanvas(){
-
-    const rect = slideImage.getBoundingClientRect();
-
-    editCanvas.width = rect.width;
-    editCanvas.height = rect.height;
-
-    editCanvas.style.left = slideImage.offsetLeft + "px";
-    editCanvas.style.top = slideImage.offsetTop + "px";
-
 }
+
+
+// ==========================
+// COMPUTER — CTRL + MOUSE WHEEL
+// ==========================
+
+slideContainer.addEventListener("wheel", function(e) {
+
+    if (!e.ctrlKey) return;
+
+    e.preventDefault();
+
+    if (e.deltaY < 0) {
+
+        currentScale += 0.1;
+
+    } else {
+
+        currentScale -= 0.1;
+    }
+
+    currentScale = Math.max(
+        MIN_ZOOM,
+        Math.min(MAX_ZOOM, currentScale)
+    );
+
+    applyZoom();
+
+}, { passive: false });
+
+
+// ==========================
+// ANDROID / TOUCH — PINCH ZOOM
+// ==========================
+
+let pinchStartDistance = null;
+let pinchStartScale = 1;
+
+
+// Calculate distance between two fingers
+function getTouchDistance(touch1, touch2) {
+
+    const dx = touch2.clientX - touch1.clientX;
+    const dy = touch2.clientY - touch1.clientY;
+
+    return Math.sqrt(
+        dx * dx + dy * dy
+    );
+}
+
+
+// Start pinch
+slideContainer.addEventListener("touchstart", function(e) {
+
+    if (e.touches.length !== 2) return;
+
+    e.preventDefault();
+
+    pinchStartDistance = getTouchDistance(
+        e.touches[0],
+        e.touches[1]
+    );
+
+    // Remember the zoom level when the pinch begins
+    pinchStartScale = currentScale;
+
+}, { passive: false });
+
+
+// Continue pinch
+slideContainer.addEventListener("touchmove", function(e) {
+
+    if (e.touches.length !== 2) return;
+
+    e.preventDefault();
+
+    const currentDistance = getTouchDistance(
+        e.touches[0],
+        e.touches[1]
+    );
+
+    if (!pinchStartDistance) return;
+
+    // How much the fingers moved apart/together
+    const scaleChange =
+        currentDistance / pinchStartDistance;
+
+    // Calculate new zoom
+    currentScale =
+        pinchStartScale * scaleChange;
+
+    // Limit zoom
+    currentScale = Math.max(
+        MIN_ZOOM,
+        Math.min(MAX_ZOOM, currentScale)
+    );
+
+    applyZoom();
+
+}, { passive: false });
+
+
+// Finish pinch
+slideContainer.addEventListener("touchend", function(e) {
+
+    if (e.touches.length < 2) {
+
+        pinchStartDistance = null;
+
+        // currentScale is deliberately NOT reset
+        // The zoom remains exactly where the user left it.
+    }
+
+}, { passive: false });
+
+
+// Also handle cancelled touches
+slideContainer.addEventListener("touchcancel", function() {
+
+    pinchStartDistance = null;
+
 }, { passive: false });
 
 // ==========================
@@ -313,15 +426,36 @@ audioBtn.addEventListener("click", function(e) {
     audioListContainer.innerHTML = "";
     audioListContainer.style.display = "flex";
 
-    if (currentImages.length === 0) return;
+   if (!currentImages || currentImages.length === 0) {
+    audioListContainer.style.display = "none";
+    return;
+}
 
-    const pageSrc = currentImages[currentIndex];
+const pageSrc = currentImages[currentIndex];
 
-    // Determine if Student or Activity Book
-    let bookType;
-    if (pageSrc.includes("student-book-pages")) bookType = "student";
-    else if (pageSrc.includes("activity-book-pages")) bookType = "activity";
-    else return;
+if (!pageSrc) {
+    console.error("Audio error: current page is undefined.", {
+        currentImages,
+        currentIndex
+    });
+
+    audioListContainer.style.display = "none";
+    return;
+}
+
+// Determine if Student or Activity Book
+let bookType;
+
+if (pageSrc.includes("student-book-pages")) {
+    bookType = "student";
+} 
+else if (pageSrc.includes("activity-book-pages")) {
+    bookType = "activity";
+} 
+else {
+    audioListContainer.style.display = "none";
+    return;
+}
 
     // Extract unit number
     const unitMatch = pageSrc.match(/unit_(\d+)/i);
@@ -335,18 +469,19 @@ audioBtn.addEventListener("click", function(e) {
 
     // Define audio tracks for all units (Student Book)
     const studentBookAudioTracks = {
-        1: {7:["page7_Track_1.1"],8:["page8_Track_1.2"],9:["page9_Track_1.3","page9_Track_1.4"]},
-        2: {13:["page13_Track_2.1"],14:["page14_Track_2.2"],15:["page15_Track_2.3","page15_Track_2.4"]},
-        3: {20:["page20_Track_3.1","page20_Track_3.2"],21:["page21_Track_3.3"]},
-        4: {26:["page26_Track_4.1"],28:["page28_Track_4.2"],29:["page29_Track_4.3","page29_Track_4.4"],30:["page30_Track_4.5"]},
-        5: {33:["page33_Track_5.1"],34:["page34_Track_5.2","page34_Track_5.3"],35:["page35_Track_5.4"]},
-        6: {39:["page39_Track_6.1"],40:["page40_Track_6.2"],41:["page41_Track_6.3"]},
-        7: {47:["page47_Track_7.1"],48:["page48_Track_7.2","page48_Track_7.3"],49:["page49_Track_7.4"]},
-        8: {53:["page53_Track_8.1"],54:["page54_Track_8.2","page54_Track_8.3"],55:["page54_Track_8.3","page55_Track_8.4"],56:["page56_Track_8.5"]},
-        9: {59:["page59_Track_9.1","page59_Track_9.2"],60:["page60_Track_9.3",],61:["page61_Track_9.4"],63:["page63_Track_9.5"]},
-        10: {66:["page66_Track_10.1"],68:["page68_Track_10.2"],69:["page69_Track_10.3"]},
-        11: {72:["page72_Track_11.1"],74:["page74_Track_11.2"],75:["page75_Track_11.3"],76:["page76_Track_11.4"]},
-        12: {80:["page80_Track_12.1"],81:["page81_Track_12.2"] }
+        1: {8:["page8_Track_1.1","page8_Track_1.2"],9:["page9_Track_1.3","page9_Track_1.4"],10:["page10_Track_1.5"],11:["page11_Track_1.6","page11_Track_1.7"],12:["page12_Track_1.8","page12_Track_1.9"],13:["page13_Track_1.10","page13_Track_1.11","page13_Track_1.12"]},
+        2: {16:["page16_Track_2.1","page16_Track_2.2","page16_Track_2.3"],17:["page17_Track_2.4","page17_Track_2.5"],18:["page18_Track_2.6"],19:["page19_Track_2.7","page19_Track_2.8","page19_Track_2.9"],20:["page20_Track_2.10","page20_Track_2.11"],21:["page21_Track_2.12","page21_Track_2.13","page21_Track_2.14","page21_Track_2.15"]},
+        3: {23:["page23_Track_3.1"],24:["page24_Track_3.2","page24_Track_3.3"],25:["page25_Track_3.4","page25_Track_3.5","page25_Track_3.6"],26:["page26_Track_3.7","page26_Track_3.8"],27:["page27_Track_3.9"],28:["page28_Track_3.10","page28_Track_3.11"],29:["page29_Track_3.12"]},
+        4: {31:["page31_Track_4.1"],32:["page32_Track_4.2"],33:["page33_Track_4.3","page33_Track_4.4","page33_Track_4.5","page33_Track_4.6"],34:["page34_Track_4.7","page34_Track_4.8"],35:["page35_Track_4.9","page35_Track_4.10"],36:["page36_Track_4.11","page36_Track_4.12","page36_Track_4.13"],38:["page38_Track_4.14","page38_Track_4.15","page38_Track_4.16","page38_Track_4.17"],39:["page39_Track_4.18","page39_Track_4.19","page39_Track_4.20"]},
+        5: {42:["page42_Track_5.1","page42_Track_5.2"],43:["page43_Track_5.3","page43_Track_5.4","page43_Track_5.5","page43_Track_5.6"],44:["page44_Track_5.7"],45:["page45_Track_5.8","page45_Track_5.9"],46:["page46_Track_5.10","page46_Track_5.11"],47:["page47_Track_5.12"],48:["page48_Track_5.13"],49:["page49_Track_5.14","page49_Track_5.15","page49_Track_5.16","page49_Track_5.17"]},
+        6: {52:["page52_Track_6.1","page52_Track_6.2"],53:["page53_Track_6.3","page53_Track_6.4"],54:["page54_Track_6.5","page54_Track_6.6","page54_Track_6.7","page54_Track_6.8"],55:["page55_Track_6.9","page55_Track_6.10"],56:["page56_Track_6.11"],57:["page57_Track_6.12","page57_Track_6.13"],58:["page58_Track_6.14","page58_Track_6.15"],59:["page59_Track_6.16"]},
+        7: {62:["page62_Track_7.1","page62_Track_7.2"],63:["page63_Track_7.3"],64:["page64_Track_7.4"],65:["page65_Track_7.5","page65_Track_7.6","page65_Track_7.7"],66:["page66_Track_7.8"],67:["page67_Track_7.9"],69:["page69_Track_7.10","page69_Track_7.11"]},
+        8: {72:["page72_Track_8.1","page72_Track_8.2","page72_Track_8.3"],73:["page73_Track_8.4","page73_Track_8.5"],74:["page74_Track_8.6"],75:["page75_Track_8.7","page75_Track_8.8","page75_Track_8.9"],76:["page76_Track_8.10"],78:["page78_Track_8.11","page78_Track_8.12"],79:["page79_Track_8.13"]},
+        9: {82:["page82_Track_9.1","page82_Track_9.2","page82_Track_9.3","page82_Track_9.4","page82_Track_9.5"],83:["page83_Track_9.6","page83_Track_9.7"],84:["page84_Track_9.8","page84_Track_9.9","page84_Track_9.10","page84_Track_9.11"],85:["page85_Track_9.12"],86:["page86_Track_9.13"],87:["page87_Track_9.14"],88:["page88_Track_9.15"],89:["page89_Track_9.16","page89_Track_9.17","page89_Track_9.18","page89_Track_9.19","page89_Track_9.20"]},
+        10: {92:["page92_Track_10.1","page92_Track_10.2"],93:["page93_Track_10.3","page93_Track_10.4","page93_Track_10.5","page93_Track_10.6"],94:["page94_Track_10.7"],95:["page95_Track_10.8","page95_Track_10.9"],97:["page97_Track_10.10"],99:["page99_Track_10.11"]},
+        11: {102:["page102_Track_11.1"],103:["page103_Track_11.2","page103_Track_11.3","page103_Track_11.4"],104:["page104_Track_11.5","page104_Track_11.6"],105:["page105_Track_11.7"],106:["page106_Track_11.8"],107:["page107_Track_11.9"],108:["page108_Track_11.10"],109:["page109_Track_11.11"]},
+        12: {112:["page112_Track_12.1","page112_Track_12.2"],113:["page113_Track_12.3","page113_Track_12.4"],114:["page114_Track_12.5","page114_Track_12.6"],115:["page115_Track_12.7","page115_Track_12.8"],118:["page118_Track_12.9"],119:["page119_Track_12.10"]},
+        
     };
 
     // Define audio tracks for all units (Activity Book)
@@ -381,14 +516,18 @@ audioBtn.addEventListener("click", function(e) {
         const trackNumber = track.split("_")[2]; // get number
         btn.textContent = `Audio ${trackNumber}`;
 
-        btn.addEventListener("click", () => {
-            const folder = bookType === "student" ? "student_book_audios" : "activity_book_audios";
-            audioSource.src = `audio/${folder}/unit_${unit}/${track}.mp3`;
-            audioPlayer.load();
-            showAudioPlayer(); // <-- use the new function
-            audioPlayer.controls = true;
-            audioPlayer.setAttribute("controlsList", "nodownload");
-        });
+      btn.addEventListener("click", () => {
+    const folder = bookType === "student" ? "student-book-audios" : "activity_book_audios";
+
+    audioSource.src = `audios/${folder}/unit_${unit}/${track}.mp3`;
+
+    audioPlayer.load();
+
+    showAudioPlayer();
+
+    audioPlayer.controls = true;
+    audioPlayer.setAttribute("controlsList", "nodownload");
+});
 
         audioListContainer.appendChild(btn);
     });
@@ -434,10 +573,10 @@ videoPlayer.addEventListener("dblclick", () => {
 });
 
 // Define videos for Unit 1
-// Define videos for Unit 1
 const unitVideos = {
     1: {
-        10: ["presentation1"],
+        7: ["Headway-Openers---Beginner---Unit-1"],
+        10: ["Hw5e-Beginner-U01---Hello!"],
         },
     3: {
         24: ["br2_004_v1_1","br2_004_v1_2"],
@@ -521,8 +660,7 @@ const gamesHub =
 
 const gameCards =
     document.querySelectorAll(".game-card");
-   
-// ==========================
+  // ==========================
 // GAMES BUTTON
 // ==========================
 
@@ -534,7 +672,6 @@ gamesBtn.addEventListener("click", function(e) {
     window.location.href = "https://play.poliglotaangola.com/";
 
 });
-
 // ==========================
 // DRAWING TARGET SYSTEM (NEW CORE FIX)
 // ==========================
@@ -775,7 +912,7 @@ function resizeEditCanvas() {
     editCanvas.style.top = slideImage.offsetTop + "px";
 
     redrawStrokes();
-    rerenderAllTextBoxes();
+   
 }
 
 function resizeWhiteboardCanvas() {
