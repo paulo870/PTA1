@@ -138,18 +138,18 @@ function loadActivityUnit(unitNumber) {
 
     let pageNumbers = [];
     switch(unitNumber) {
-        case "1": pageNumbers = [7,8,9,10,11,12]; break;
-        case "2": pageNumbers = [13,14,15,16,17,18]; break;
-        case "3": pageNumbers = [19,20,21,22,23,24]; break;
-        case "4": pageNumbers = [25,26,27,28,29,30]; break;
-        case "5": pageNumbers = [31,32,33,34,35,36]; break;
-        case "6": pageNumbers = [39,40,41,42,43,44]; break;
-        case "7": pageNumbers = [45,46,47,48,49,50]; break;
-        case "8": pageNumbers = [51,52,53,54,55,56]; break;
-        case "9": pageNumbers = [57,58,59,60,61,62]; break;
-        case "10": pageNumbers = [63,64,65,66,67,68]; break;
-        case "11": pageNumbers = [71,72,73,74,75,76]; break;
-        case "12": pageNumbers = [77,78,79,80,81,82]; break;
+        case "1": pageNumbers = [6,7,8,9,10,11]; break;
+        case "2": pageNumbers = [16,17,18,19,20,21]; break;
+        case "3": pageNumbers = [22,23,24,25,26,27,28]; break;
+        case "4": pageNumbers = [29,30,31,32,33,34,35]; break;
+        case "5": pageNumbers = [36,37,38,39,40,41]; break;
+        case "6": pageNumbers = [42,43,44,45,46,47,48]; break;
+        case "7": pageNumbers = [49,50,51,52,53,54]; break;
+        case "8": pageNumbers = [55,56,57,58,59,60,61]; break;
+        case "9": pageNumbers = [62,63,64,65,66,67]; break;
+        case "10": pageNumbers = [68,69,70,71,72,73]; break;
+        case "11": pageNumbers = [74,75,76,77,78,79]; break;
+        case "12": pageNumbers = [80,81,82,83]; break;
         default: pageNumbers = []; break;
     }
 
